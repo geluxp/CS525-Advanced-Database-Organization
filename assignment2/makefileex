@@ -1,0 +1,15 @@
+test2_11 : dberror.o storage_mgr.o buffer_mgr.o buffer_mgr_stat.o test_assign2_11.o
+	gcc -o test2_11 dberror.o storage_mgr.o\
+	 buffer_mgr.o buffer_mgr_stat.o test_assign2_11.o
+dberror.o : dberror.c dberror.h
+	gcc -c dberror.c dberror.h
+storage_mgr.o : storage_mgr.c storage_mgr.h dberror.h
+	gcc -c storage_mgr.c storage_mgr.h dberror.h
+buffer_mgr.o : buffer_mgr.c storage_mgr.h dberror.h dt.h buffer_mgr.h buffer_mgr_stat.h
+	gcc -c buffer_mgr.c storage_mgr.h dberror.h dt.h buffer_mgr.h buffer_mgr_stat.h
+buffer_mgr_stat.o : buffer_mgr_stat.c buffer_mgr_stat.h buffer_mgr.h
+	gcc -c buffer_mgr_stat.c buffer_mgr_stat.h buffer_mgr.h
+test_assign1_11.o : test_assign2_11.c storage_mgr.h buffer_mgr_stat.h buffer_mgr.h test_helper.h dberror.h
+	gcc -c test_assign2_11.c storage_mgr.h buffer_mr_stat.h buffer_mgr.h test_helper.h dberror.h
+clean : 
+	rm test2_11 dberror.o storage_mgr.o buffer_mgr.o buffer_mgr_stat.o test_assign2_11.o 
